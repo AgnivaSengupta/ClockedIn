@@ -1,50 +1,111 @@
-# Welcome to your Expo app 👋
+# 📱 Attendance Tracker App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A mobile app built with **React Native (Expo)** to help college students track and maintain the minimum 75% attendance requirement. The app offers a subject-wise view, class schedules, and clean visuals to make attendance tracking simple and effective.
 
-## Get started
+---
 
-1. Install dependencies
+## 🚀 Features
 
-   ```bash
-   npm install
-   ```
+### ✅ Completed
 
-2. Start the app
+- **🎯 User Onboarding**  
+  Set your name, weekly class schedule, and target attendance percentage.  
+  *(Currently stored in memory using Zustand – persistent storage via MMKV is upcoming)*
 
-   ```bash
-   npx expo start
-   ```
+- **📅 Daily Attendance Overview**  
+  Home screen displays today’s classes and current attendance percentage per subject.
 
-In the output, you'll find options to open the app in a
+- **📆 Expandable Weekly Calendar**  
+  Check which classes are scheduled on any day with a clean calendar interface.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- **🧭 Bottom Navigation Bar**  
+  Navigate between Home, Schedule, History, and Settings pages with a custom-designed bottom nav.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+- **📄 Subject Management**  
+  View and manage each subject individually, with planned per-subject attendance history calendar.
 
-## Get a fresh project
+---
 
-When you're ready, run:
+### 🛠️ In Progress
+
+- **📦 Persistent Storage with MMKV**  
+  To save attendance data and user preferences locally using high-performance storage.
+
+- **📊 Subject-wise Attendance Calendar View**  
+  Visualize attendance history (present, absent, no class) per subject in a calendar format.
+
+- **🕒 Reanimated Clock UI**  
+  Animated flip-clock style time display on the Home screen.
+
+- **🌙 Dark Mode Support**  
+  Toggle between light and dark themes.
+
+- **🧮 Improved Attendance Logic**  
+  Fixing edge cases in attendance percentage calculation.
+
+- **✨ Onboarding Animations**  
+  Smooth and intuitive animations using Reanimated for better UX.
+
+---
+
+## 🧑‍💻 Tech Stack
+
+- **React Native (Expo)**
+- **Zustand** – global state management
+- **React Native Calendars** – calendar components
+- **MMKV (Planned)** – for persistent offline storage
+- **React Native Reanimated (Planned)** – for animations
+
+---
+
+## 📸 Screenshots
+
+_(Coming soon)_ — Will include UI previews of the home screen, calendar, and subject pages.
+
+---
+
+## 🔮 Upcoming Enhancements
+
+- Attendance analytics and graphs
+- Notification reminders before classes
+- Cloud sync or export/backup functionality
+- Customizable attendance rules
+
+---
+
+## 📁 Project Structure (Simplified)
 
 ```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+.
+├── app/                            # Core screens and tabs
+│   ├── (tabs)/                     # Bottom tab views (calendar, home, history)
+│   │   ├── calendar.tsx
+│   │   ├── home.tsx
+│   │   └── history.tsx
+│   ├── onboarding/                # Onboarding screens (username, schedule, target)
+│   ├── settings/                  # Settings (Dark mode, etc.)
+│   ├── splash/                    # Splash or loading components
+│   ├── subject-history/          # Subject-wise history (calendar view - WIP)
+│   ├── support/                   # Possibly helper screens
+│   ├── _layout.tsx               # App layout wrapper
+│   └── index.tsx                 # App entry point
+│
+├── components/
+│   ├── ui/                        # UI components
+│   ├   ├── attendanceCard.tsx
+│   ├   └── customNavbar.tsx
+│   └── Scheduler.tsx
+│
+├── store/                         # Zustand state stores
+│   ├── attendanceStore.ts
+│   └── useAppStore.ts
+│
+├── utils/                         # Utility functions, helpers, constants
+│
+├── assets/                        # Fonts, images, splash screens, etc.
+│
+├── .gitignore
+├── app.json
+├── package.json
+├── README.md
+└── tsconfig.json
