@@ -1,12 +1,117 @@
-import { StyleSheet, Text, View } from "react-native"
-import { SafeAreaView } from "react-native-safe-area-context"
+import CalendarComponent from "@/components/ui/calendar";
+import { useAppStore } from "@/store/useAppStore";
+import { useRouter } from "expo-router";
+import { useMemo, useState } from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Calendar } from "react-native-calendars";
+import { SafeAreaView } from "react-native-safe-area-context";
 
+
+const dummyInitialMarkings: { [date: string]: { status: "present" | "absent" | "noClass"; }; } = {
+    // Now explicitly typing the status property
+    '2025-08-01': {
+      status: 'present', // This is a literal string, not a generic string
+    },
+    '2025-08-02': {
+      status: 'absent',
+    },
+    '2025-08-03': {
+      status: 'noClass',
+    },
+  };
 export default function HistoryPage (){
+
+    // Present Date calculation
+    const now = new Date();
+    const day = now.getDate().toString().padStart(2, '0');
+    const month = (now.getMonth() + 1).toString().padStart(2, '0');
+    const year = now.getFullYear();
+
+    const formatteDate = `${year}-${month}-${day}`
+
+    const initDate = formatteDate;
+    const [selected, setSelected] = useState(initDate);
+
+    const marked = useMemo(() => ({
+        [selected]: {
+            customStyles: {
+                container: {
+                    backgroundColor: "#0F0E0E",
+                    borderRadius: 7
+                }, 
+                text: {
+                    color: "#ffffff"
+                }
+            }
+        }
+    }), [selected])
+
+
+    const subjects = useAppStore((state) => state.subjects);
+    const router = useRouter();
+
+    console.log(subjects)
+
     return (
+        // the marked boolean gives a circular selected style only
+        // for custom styles --> use customStyles prop
+
+        // Required custom styles => 
+            // 1. Present --> {container: {backgroundColor: "#A2E950", borderRadius: 7}, text: {color: "black"}}  
+            // 2. Absent --> {container: {backgroundColor: "#FF2929", borderRadius: 7}, text: {color: "black"}}
+            // 3. No Class / cancelled class --> {container: {backgroundColor: "#E5A800", borderRadius: 7}, text: {color: "black"}}
+            // 4. current Date --> {container: {backgroundColor: "#0F0E0E", borderRadius: 7}, text: {color: "black"}}
+            // 5. default --> {container: {backgroundColor: "#FFFFFF", borderRadius: 7}, text: {color: "black"}}
 
         <SafeAreaView style={styles.safeContainer}>
             <View style={styles.viewContainer}>
-                <Text> This is history Page </Text>
+                <Text style={styles.heading}>Subject History</Text>
+                {/* <Calendar
+                    initialDate={initDate}
+                    markingType="custom"
+                    markedDates={marked}
+                    onDayPress={(day) => 
+                        setSelected(day.dateString)
+                    }
+                    theme= {{
+                        calendarBackground: "transparent",
+                        textDayFontWeight: 700,
+                        textMonthFontWeight: 900,
+                        textMonthFontSize: 16,
+                        textDisabledColor: "grey",
+                        textDayHeaderFontWeight: 700,
+                        stylesheet: {
+                            calendar: {
+                                header: {
+                                    dayTextAtIndex0: {
+                                        color: 'red'
+                                      },
+                                      dayTextAtIndex6: {
+                                        color: 'green'
+                                      }
+                                }
+                            }
+                        }
+                    }}
+                /> */}
+
+                {/* <CalendarComponent initialMarkings={dummyInitialMarkings}/> */}
+
+                    <View style={{
+                        flexDirection: "column",
+                        gap: 5
+                    }}>
+                        {subjects.map((subject, index) => (
+                            <Pressable onPress={() => router.push(`/subject-history/${subject.id}`)}>
+                                <View key={index} style={styles.subjectListCard}>
+                                    <Text>{subject.name}</Text>
+                                    <Text>Attendance: {subject.attended}/{subject.total} </Text>
+                                </View>
+                            </Pressable>
+                        ) )}
+                    </View>
+                
+
             </View>
         </SafeAreaView>
 
@@ -38,17 +143,13 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
 
-    timer: {
+    subjectListCard: {
+        backgroundColor: "#ffffff",
         width: "auto",
-        height: 150,
-        borderWidth: 1,
-        borderStyle: "dashed",
-        borderRadius: 10, 
-        marginBottom: 20
-    },
-    wrapper: {
-        borderWidth: 1,
-        padding: 0
+        height: 50,
+        padding: 5,
+        borderRadius: 5
     }
 
 })
+

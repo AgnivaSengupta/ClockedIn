@@ -109,7 +109,8 @@ const styles = StyleSheet.create({
         justifyContent: "flex-end",
         transform: [{ translateX: 60 }],
 
-    }
+    },
+    
 }
 
 )

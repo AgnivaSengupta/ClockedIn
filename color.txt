@@ -1,1 +1,18 @@
 background-color: #E8E1D9
+rgb(151, 234, 143)
+#97ea8f
+
+#ffffff
+#ebebeb
+
+#e5e6e1
+
+#ff8e53
+
+#b2a9ff
+
+#dab6f5
+
+#f5ffa6
+
+#cde9d4

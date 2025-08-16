@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 
 export interface AttendanceLog {
-    id: String; // unique Id for the log
+    id: string; // unique Id for the log
     subjectId: string;
     date: string;
     status: 'present' | 'absent' | 'noClass';

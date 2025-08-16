@@ -1,4 +1,5 @@
-import { create } from 'zustand'
+import { create } from 'zustand';
+import { useAttendanceStore } from './attendanceStore';
 
 interface Subject {
     id: string;
@@ -88,6 +89,16 @@ export const useAppStore = create<AppState>((set) => ({
                 return { ...subject, attended: Math.max(0, attended), total: Math.max(0, total) };
             });
     
+            const attendanceStore = useAttendanceStore.getState();
+            if (!attendanceStore.hasLogForDate(subjectId, date)){
+                attendanceStore.addLog({
+                    id: Date.now().toString(),
+                    subjectId,
+                    date,
+                    status: "present"
+                })
+            }
+
             return {
                 subjects: updatedSubjects,
                 attendanceRecord: {
@@ -125,6 +136,16 @@ export const useAppStore = create<AppState>((set) => ({
                 return { ...subject, attended: Math.max(0, attended), total: Math.max(0, total) };
             });
     
+            const attendanceStore = useAttendanceStore.getState();
+            if (!attendanceStore.hasLogForDate(subjectId, date)){
+                attendanceStore.addLog({
+                    id: Date.now().toString(),
+                    subjectId,
+                    date,
+                    status: "absent"
+                })
+            }
+
             return {
                 subjects: updatedSubjects,
                 attendanceRecord: {
@@ -161,6 +182,16 @@ export const useAppStore = create<AppState>((set) => ({
     
                 return { ...subject, attended: Math.max(0, attended), total: Math.max(0, total) };
             });
+
+            const attendanceStore = useAttendanceStore.getState();
+            if (!attendanceStore.hasLogForDate(subjectId, date)){
+                attendanceStore.addLog({
+                    id: Date.now().toString(),
+                    subjectId,
+                    date,
+                    status: "noClass"
+                })
+            }
     
             return {
                 subjects: updatedSubjects,
