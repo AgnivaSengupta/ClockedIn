@@ -153,6 +153,7 @@ export const ScheduleForm = ({ onClose }) => {
             const newSubject = {
                 id: newId,
                 name: subjectName,
+                teacher: teacher,
                 classDays: selectedDays, 
                 attended: attended,
                 total: total,

@@ -4,6 +4,7 @@ import { useAttendanceStore } from './attendanceStore';
 interface Subject {
     id: string;
     name: string;
+    teacher: string;
     classDays: number[]; // [0-6] Sun-Sat
     attended: number; // total number of classes attended for that subject
     total: number; // total classes of that subject

@@ -11,6 +11,7 @@ import Svg, { Circle } from 'react-native-svg';
 interface Subject {
   id: string;
   name: string;
+  teacher: string;
   classDays: number[];
   attended: number;
   total: number;
@@ -131,6 +132,7 @@ const AttendanceCard: React.FC<AttendanceCardProps> = ({
       <View style={styles.header}>
         <View style={styles.leftSection}>
           <Text style={styles.title}>{subject.name}</Text>
+          <Text style={styles.subtitle}>{subject.teacher}</Text>
         </View>
         <CircularProgress />
       </View>
@@ -203,10 +205,11 @@ const AttendanceCard: React.FC<AttendanceCardProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#ffffff',
+    backgroundColor: '#292623',
     borderRadius: 20,
     paddingHorizontal: 20,
     paddingVertical: 10,
+    // borderWidth: 1,
   },
   header: {
     flexDirection: 'row',
@@ -218,12 +221,18 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontSize: 24,
+    fontSize: 32,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#fbfbf9',
     lineHeight: 32,
     marginBottom: 2,
     fontFamily: 'Quantico-regular',
+  },
+
+  subtitle: {
+    fontSize: 16,
+    fontWeight: "300",
+    color: "#fbfbf9"
   },
   progressContainer: {
     position: 'relative',
@@ -241,7 +250,7 @@ const styles = StyleSheet.create({
   progressText: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#fbfbf9',
   },
   buttonContainer: {
     flexDirection: 'row',

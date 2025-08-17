@@ -1,23 +1,29 @@
 import { useAppStore } from "@/store/useAppStore";
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import { StyleSheet, Text, View, TextInput, Pressable } from "react-native";
+import { StyleSheet, Text, View, TextInput, Pressable, Dimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+
+const { width } = Dimensions.get("window")
 
 export default function target(){
     const router = useRouter();
 
     const setTargetAttendance = useAppStore((state) => state.setTargetAttendance);
 
-    const [target, setTarget] = useState(75)
+    const [target, setTarget] = useState<string>('')
 
-    const handleAddTarget = (text) => {
-        const num = parseInt(text, 10);
-        if (!isNaN(num)) {
-            setTarget(num);
-        } else if (text === '') {
-            setTarget(75);
-        }
+    const handleAddTarget = (text: string) => {
+        //const num = parseInt(text, 10);
+        // if (!isNaN(num)) {
+        //     setTarget(num);
+        // } else if (text === '') {
+        //     setTarget(75);
+        // }
+
+        const numStr = target.trim() === '' ? '75' : target;
+        setTarget(numStr)
+        //const finalTarget = isNaN(num) ? 75 : num;
     };
     return (
 
@@ -41,7 +47,7 @@ export default function target(){
                 <Pressable
                  style={styles.button}
                  onPress={()=> {
-                    setTargetAttendance(target)
+                    setTargetAttendance(parseInt(target, 10))
                     router.replace("/(tabs)/home")
                  }}
                  >
@@ -87,30 +93,24 @@ const styles = StyleSheet.create({
     },
 
     button: {
-        width: "auto",
-        paddingVertical: 12,
-        paddingHorizontal:12,
-        backgroundColor: "white",
+        position: "absolute",
+        bottom: 20,
+        //right: 40, // need to make it dynamic with screen size
+        width: width * 0.85,
+        alignSelf: "center",
+        paddingVertical: 15,
+        paddingHorizontal: 12,
+        backgroundColor: "black",
+        opacity: 0.8,
         elevation: 2,
-        borderRadius: 20,
-        display:"flex",
+        borderRadius: 25,
+        display: "flex",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
     },
     buttonText: {
-        fontWeight: "bold",
-        fontSize: 14
-    },
-    image: {
-        width: 350, // Set the desired width
-        height: 550, // Set the desired height
-        resizeMode: 'contain', // Ensures the image fits within the dimensions
-    },
-    imageContainer: {
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "flex-end",
-        transform: [{ translateX: 60 }],
-
+        fontWeight: "400",
+        fontSize: 22,
+        color: "white"
     }
 })

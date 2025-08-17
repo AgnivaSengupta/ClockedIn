@@ -2,7 +2,11 @@ import { useAppStore } from "@/store/useAppStore";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { StyleSheet, Text, View, TextInput, Pressable, Image } from "react-native";
+import Animated, { FadeInUp, FadeOutUp, useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Dimensions } from "react-native"
+
+const { width } = Dimensions.get("window");
 
 export default function UserName(){
 
@@ -11,11 +15,19 @@ export default function UserName(){
 
     const storeUserName = useAppStore((state) => state.setUserName)
 
+    const scale = useSharedValue(1);
+
+    const animatedStyle = useAnimatedStyle(() => {
+        return {
+            transform: [{scale: scale.value}]
+        }
+    })
+
     return (
         <SafeAreaView style={styles.safecontainer}>
             <View style={styles.viewContainer}>
 
-                <View>
+                <Animated.View entering={FadeInUp} exiting={FadeOutUp}>
                     <Text style={[styles.heading, { fontFamily: 'Quantico-Bold' }]}>
                         Hi, What should we call you ?
                     </Text>
@@ -26,7 +38,7 @@ export default function UserName(){
                         value={name} 
                         placeholder="Username"
                     />
-                </View>
+                </Animated.View>
 
 
                 <View style={styles.imageContainer}>
@@ -38,15 +50,45 @@ export default function UserName(){
                 </View>
 
                 <Pressable 
-                    style={styles.button}
+                    // style={styles.button}
+                    disabled={!name.trim()}
+                    onPressIn={() => {
+                        if (!name.trim()) return;
+                        scale.value = withSpring(0.95, {damping: 10, stiffness: 200})
+                    }}
+
+                    onPressOut={() => {
+                        if (!name.trim()) return;
+                        scale.value = withSpring(1, { damping: 10, stiffness: 200 });
+                      }}
+
                     onPress = {()=> {
-                        storeUserName(name);
-                        router.push("/onboarding/Schedule")
+                        console.log("Button pressed!")
+                        if (!name.trim()) return;
+                        try {
+                            storeUserName(name);
+                            console.log("Username stored successfully");
+                        } catch (error) {
+                            console.error("Store error:", error);
+                            return; // Don't navigate if store fails
+                        }
+                        
+                        router.push("/onboarding/Schedule");
                     }}
                 >
-                    <Text style={styles.buttonText}>
-                        Next
-                    </Text>
+                    <Animated.View
+                        entering={FadeInUp.delay(400)}
+                        style={[
+                            styles.button, 
+                            animatedStyle,
+                            {backgroundColor: name.trim() ? "black" : "gray"}
+                        ]}
+                    >
+
+                        <Text style={styles.buttonText}>
+                            Next
+                        </Text>
+                    </Animated.View>
                 </Pressable>
             </View>
         </SafeAreaView>
@@ -68,13 +110,13 @@ const styles = StyleSheet.create({
     },
 
     input: {
-        height: 50,
+        height: 70,
         borderColor: 'gray',
         borderWidth: 1,
-        paddingHorizontal: 10,
-        borderRadius: 10,
+        paddingHorizontal: 20,
+        borderRadius: 20,
         backgroundColor: "#FDF5E6",
-        borderStyle: "dashed"
+        borderStyle: "dashed",
     },
 
     heading: {
@@ -84,19 +126,25 @@ const styles = StyleSheet.create({
     },
 
     button: {
-        width: "auto",
-        paddingVertical: 12,
-        paddingHorizontal:12,
-        backgroundColor: "white",
+        position: "absolute",
+        bottom: 20,
+        //right: 40, // need to make it dynamic with screen size
+        width: width * 0.85,
+        alignSelf: "center",
+        paddingVertical: 15,
+        paddingHorizontal: 12,
+        backgroundColor: "black",
+        opacity: 0.8,
         elevation: 2,
-        borderRadius: 20,
-        display:"flex",
+        borderRadius: 25,
+        display: "flex",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
     },
     buttonText: {
-        fontWeight: "bold",
-        fontSize: 14
+        fontWeight: "400",
+        fontSize: 22,
+        color: "white"
     },
     image: {
         width: 350, // Set the desired width
@@ -110,7 +158,7 @@ const styles = StyleSheet.create({
         transform: [{ translateX: 60 }],
 
     },
-    
+
 }
 
 )

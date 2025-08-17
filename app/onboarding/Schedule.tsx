@@ -2,9 +2,12 @@ import { BottomSheet, ScheduleForm } from "@/components/ui/bottomSheet";
 import { useAppStore } from "@/store/useAppStore";
 import { router } from "expo-router";
 import { useState } from "react";
-import { ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Dimensions, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { GestureHandlerRootView, Pressable } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+
+const { width } = Dimensions.get("window")
 
 export default function Schedule() {
 
@@ -14,6 +17,7 @@ export default function Schedule() {
     const closeBottomSheet = () => setIsBottomSheetVisible(false);
 
     const subjects = useAppStore((state) => state.subjects)
+    const removeSubject = useAppStore((state) => state.removeSubject)
 
     return (
         <GestureHandlerRootView>
@@ -47,7 +51,26 @@ export default function Schedule() {
                         : <ScrollView contentContainerStyle={styles.subjectList}>
                             {subjects.map((subject) => (
                                 <View key={subject.id} style={styles.subjectCard}>
-                                    <Text>{subject.name}</Text>
+
+                                    <View>
+                                        <Text style={{
+                                            fontWeight: "500",
+                                            fontSize: 22
+                                        }}>
+                                            {subject.name}
+                                        </Text>
+
+                                        <Text>
+                                            Attendace : {subject.attended} / {subject.total}
+                                        </Text>
+                                    </View>
+
+                                    <Pressable
+                                        onPress={() => removeSubject(subject.id)}
+                                    >
+                                        <MaterialCommunityIcons name="delete-empty-outline" size={24} color="red" />
+                                    </Pressable>
+
                                 </View>
                             ))}
                         </ScrollView>
@@ -128,17 +151,19 @@ const styles = StyleSheet.create({
 
     nextButton: {
         position: "absolute",
-        bottom: 30,
-        right: 40, // need to make it dynamic with screen size
-        width: 350,
-        paddingVertical: 20,
+        bottom: 20,
+        //right: 40, // need to make it dynamic with screen size
+        width: width * 0.85,
+        alignSelf: "center",
+        paddingVertical: 15,
         paddingHorizontal: 12,
-        backgroundColor: "white",
+        backgroundColor: "black",
+        opacity: 0.8,
         elevation: 2,
-        borderRadius: 20,
+        borderRadius: 25,
         display: "flex",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
     },
     button: {
         width: "auto",
@@ -152,8 +177,9 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     buttonText: {
-        fontWeight: "bold",
-        fontSize: 16
+        fontWeight: "400",
+        fontSize: 22,
+        color: "white"
     },
 
     subjectCard: {
@@ -165,7 +191,8 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center",
         paddingHorizontal: 20, 
-        borderRadius: 20
+        borderRadius: 20,
+        borderWidth: 1
     },
 
     subjectList: {
