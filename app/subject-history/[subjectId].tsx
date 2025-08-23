@@ -1,3 +1,4 @@
+import CircularProgressBar from "@/components/ui/CircularProgressBar";
 import CalendarComponent from "@/components/ui/calendar";
 import { useAttendanceStore } from "@/store/attendanceStore";
 import { useAppStore } from "@/store/useAppStore";
@@ -10,11 +11,15 @@ const requiredNoOfDays = (present, total, target) => {
   
     if (required > 0) {
       // Still need to attend more classes
-      return { type: "attend", value: required };
+      return <Text style={styles.subheading}>Need to attend <Text style={styles.highlightText}> {required}  more class </Text></Text>;
     } else {
       // Already above target, calculate safe bunks
       const safeBunks = Math.floor((100 * present - target * total) / target);
-      return { type: "bunk", value: safeBunks };
+      if (safeBunks == 0){
+        return <Text style={styles.subheading}>You are right on track.</Text>
+      }else { 
+        return <Text style={styles.subheading}>You can bunk {safeBunks} class</Text>;
+      }
     }
   };
 
@@ -27,6 +32,11 @@ export default function SubjectHistoryPage(){
 
     const subject = subjects.find((s) => s.id == id);
     console.log(subject)
+
+    const attended = subject?.attended
+    const total = subject?.total
+
+    const attendance = attended/total
 
     const getsubjectLogs = useAttendanceStore((state) => state.getLogsBySubject)
     const subjectLogs = getsubjectLogs(id)
@@ -54,9 +64,29 @@ export default function SubjectHistoryPage(){
                     height: 200,
                     borderWidth: 1,
                     borderRadius: 20,
-                    borderStyle: "dashed"
+                    borderStyle: "dashed",
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    paddingHorizontal: 20
+
                 }}>
+
+
+                    <CircularProgressBar
+                        target={targetAttendance}
+                        attendance={attendance}
+                    />
+
+                    <View style={styles.statsContainer}>
+                        <Text style={styles.subheading}>Present: {attended}</Text>
+                        <Text style={styles.subheading}>Absent: {total - attended}</Text>
+                        
+                    </View>
+
                 </View>
+                    {requiredNoOfDays(attended, total, targetAttendance)}
 
                 <CalendarComponent initialMarkings={subjectDateMarkings} />
 
@@ -76,7 +106,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "column",
         padding: 20,
-        gap: 30
+        gap: 20
     },
 
     heading: {
@@ -86,8 +116,8 @@ const styles = StyleSheet.create({
     },
 
     subheading: {
-        fontWeight: "bold",
-        fontSize: 18,
+        fontWeight: "500",
+        fontSize: 20,
         marginBottom: 10,
     },
 
@@ -97,6 +127,18 @@ const styles = StyleSheet.create({
         height: 50,
         padding: 5,
         borderRadius: 5
+    }, 
+
+    statsContainer: {
+        margin: 10,
+        //borderWidth: 1,
+        width: "40%"
+    },
+    highlightText: {
+        backgroundColor: 'yellow', // The highlight color
+        paddingHorizontal: 4, // Optional: for a little padding around the text
+        borderRadius: 2, // Optional: for rounded corners
+        fontWeight: 'bold', // Optional: to make the text bold
     }
 
 })

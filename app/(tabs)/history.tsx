@@ -103,9 +103,9 @@ export default function HistoryPage (){
                     }}>
                         {subjects.map((subject, index) => (
                             <Pressable onPress={() => router.push(`/subject-history/${subject.id}`)}>
-                                <View key={index} style={styles.subjectListCard}>
-                                    <Text>{subject.name}</Text>
-                                    <Text>Attendance: {subject.attended}/{subject.total} </Text>
+                                <View key={subject.id} style={styles.subjectListCard}>
+                                    <Text style={styles.subjectHeading}>{subject.name}</Text>
+                                    <Text style={styles.subjectSubHeading}>Attendance: {subject.attended}/{subject.total} </Text>
                                 </View>
                             </Pressable>
                         ) )}
@@ -144,12 +144,25 @@ const styles = StyleSheet.create({
     },
 
     subjectListCard: {
-        backgroundColor: "#ffffff",
+        backgroundColor: "#292623",
         width: "auto",
-        height: 50,
-        padding: 5,
-        borderRadius: 5
-    }
+        paddingVertical: 20,
+        paddingHorizontal: 30,
+        borderRadius: 20,
+        display: "flex",
+        gap: 8
+    },
 
+    subjectHeading: {
+        fontWeight: 700,
+        fontSize: 22,
+        color: "white"
+    },
+
+    subjectSubHeading: {
+        fontSize: 14,
+        fontWeight: 400,
+        color: "white"
+    }
 })
 
