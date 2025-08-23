@@ -24,6 +24,9 @@ A mobile app built with **React Native (Expo)** to help college students track a
 - **📄 Subject Management**  
   View and manage each subject individually, with planned per-subject attendance history calendar.
 
+- **📊 Subject-wise Attendance Calendar View**  
+  Visualize attendance history (present, absent, no class) per subject in a calendar format.
+
 ---
 
 ### 🛠️ In Progress
@@ -31,20 +34,13 @@ A mobile app built with **React Native (Expo)** to help college students track a
 - **📦 Persistent Storage with MMKV**  
   To save attendance data and user preferences locally using high-performance storage.
 
-- **📊 Subject-wise Attendance Calendar View**  
-  Visualize attendance history (present, absent, no class) per subject in a calendar format.
-
-- **🕒 Reanimated Clock UI**  
-  Animated flip-clock style time display on the Home screen.
-
 - **🌙 Dark Mode Support**  
   Toggle between light and dark themes.
 
 - **🧮 Improved Attendance Logic**  
   Fixing edge cases in attendance percentage calculation.
 
-- **✨ Onboarding Animations**  
-  Smooth and intuitive animations using Reanimated for better UX.
+- **Setting Page**
 
 ---
 
