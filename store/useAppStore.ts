@@ -81,23 +81,39 @@ export const useAppStore = create<AppState>((set) => ({
     
                 // Revert previous
                 if (prevStatus === 'present') return subject; // same, no change
-                if (prevStatus === 'absent') total -= 1;
-                if (!prevStatus) total += 1; // first marking
-                if (prevStatus === 'noclass') total += 1;
+                if (prevStatus === 'absent'){
+                    attended += 1
+                }
+                else if (prevStatus === 'noclass'){
+                    total += 1;
+                    attended += 1;
+                }
+                else if (!prevStatus){
+                    total += 1;
+                    attended += 1;
+                }
     
-                attended += 1;
     
                 return { ...subject, attended: Math.max(0, attended), total: Math.max(0, total) };
             });
     
             const attendanceStore = useAttendanceStore.getState();
-            if (!attendanceStore.hasLogForDate(subjectId, date)){
+            const existingLogs = attendanceStore.getLogsByDate(date);
+
+            // checking if log for this subject already exists on this date
+            const existingLog = existingLogs.find((log) => log.subjectId === subjectId);
+
+            if (existingLog){
+                attendanceStore.updateLog(existingLog.id, { status : "present"});
+            }
+
+            else {
                 attendanceStore.addLog({
                     id: Date.now().toString(),
                     subjectId,
                     date,
-                    status: "present"
-                })
+                    status: "present",
+                });
             }
 
             return {
@@ -127,7 +143,6 @@ export const useAppStore = create<AppState>((set) => ({
                 if (prevStatus === 'absent') return subject; // same, no change
                 if (prevStatus === 'present') {
                     attended -= 1;
-                    total -= 1;
                 } else if (!prevStatus) {
                     total += 1; // first marking
                 } else if (prevStatus === 'noclass') {
@@ -138,13 +153,18 @@ export const useAppStore = create<AppState>((set) => ({
             });
     
             const attendanceStore = useAttendanceStore.getState();
-            if (!attendanceStore.hasLogForDate(subjectId, date)){
-                attendanceStore.addLog({
-                    id: Date.now().toString(),
-                    subjectId,
-                    date,
-                    status: "absent"
-                })
+            const existingLogs = attendanceStore.getLogsByDate(date);
+            const existingLog = existingLogs.find((log) => log.subjectId === subjectId);
+        
+            if (existingLog) {
+              attendanceStore.updateLog(existingLog.id, { status: "absent" });
+            } else {
+              attendanceStore.addLog({
+                id: Date.now().toString(),
+                subjectId,
+                date,
+                status: "absent",
+              });
             }
 
             return {
@@ -177,21 +197,24 @@ export const useAppStore = create<AppState>((set) => ({
                     total -= 1;
                 } else if (prevStatus === 'absent') {
                     total -= 1;
-                } else if (!prevStatus) {
-                    // If nothing was marked before, don't change anything
                 }
     
                 return { ...subject, attended: Math.max(0, attended), total: Math.max(0, total) };
             });
 
             const attendanceStore = useAttendanceStore.getState();
-            if (!attendanceStore.hasLogForDate(subjectId, date)){
-                attendanceStore.addLog({
-                    id: Date.now().toString(),
-                    subjectId,
-                    date,
-                    status: "noClass"
-                })
+            const existingLogs = attendanceStore.getLogsByDate(date);
+            const existingLog = existingLogs.find((log) => log.subjectId === subjectId);
+        
+            if (existingLog) {
+              attendanceStore.updateLog(existingLog.id, { status: "noClass" });
+            } else {
+              attendanceStore.addLog({
+                id: Date.now().toString(),
+                subjectId,
+                date,
+                status: "noClass",
+              });
             }
     
             return {

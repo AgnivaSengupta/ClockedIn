@@ -1,6 +1,4 @@
-import { useAttendanceStore } from "@/store/attendanceStore";
 import { useMemo, useState } from "react";
-import { StyleSheet } from "react-native";
 import { View } from "react-native";
 import { Calendar } from "react-native-calendars";
 import { MarkedDates } from "react-native-calendars/src/types";
@@ -10,7 +8,9 @@ interface CalendarComponentProps {
         [date: string]: {
             status: "present" | "absent" | "noClass" 
         }
-    }
+    },
+    // visible: boolean;
+    // setVisible: (state: boolean) => void
 }
 
 type DateMarking= {
@@ -54,7 +54,7 @@ const markingStyles = {
             borderRadius: 7
         }, 
         text: {
-            color: "black"
+            color: "white"
         }
     }
 }
@@ -73,7 +73,7 @@ export default function CalendarComponent({ initialMarkings } : CalendarComponen
                 customStyles: markingStyles[status]
             }
         }
-
+        
         if (selected){
             newMarking[selected] = {
                 customStyles: markingStyles.selected
@@ -115,28 +115,3 @@ export default function CalendarComponent({ initialMarkings } : CalendarComponen
         </View>
     )
 }
-
-
-const styles = StyleSheet.create({
-
-    viewContainer: {
-        display: "flex",
-        flex: 1,
-        flexDirection: "column",
-        padding: 20,
-    },
-
-    heading: {
-        fontWeight: "bold",
-        fontSize: 32,
-        marginBottom: 20,
-    },
-
-    subheading: {
-        fontWeight: "bold",
-        fontSize: 18,
-        marginBottom: 10,
-    },
-
-})
-

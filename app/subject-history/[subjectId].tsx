@@ -3,6 +3,7 @@ import CalendarComponent from "@/components/ui/calendar";
 import { useAttendanceStore } from "@/store/attendanceStore";
 import { useAppStore } from "@/store/useAppStore";
 import { useLocalSearchParams } from "expo-router";
+import { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -52,6 +53,7 @@ export default function SubjectHistoryPage(){
     //  required data --> total present, absent and total classes to be shown in graph
     // the required number of classes need to attend to achieve the target attendance
     
+
     return (
         <SafeAreaView style={styles.safeContainer}>
             <View style={styles.viewContainer}>
@@ -88,7 +90,7 @@ export default function SubjectHistoryPage(){
                 </View>
                     {requiredNoOfDays(attended, total, targetAttendance)}
 
-                <CalendarComponent initialMarkings={subjectDateMarkings} />
+                <CalendarComponent initialMarkings={subjectDateMarkings}/>
 
             </View>
         </SafeAreaView>

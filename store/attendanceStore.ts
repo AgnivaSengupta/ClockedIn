@@ -12,6 +12,7 @@ interface AttendanceState {
 
     addLog: (log: AttendanceLog) => void;
     removeLog: (logId: string) => void;
+    updateLog: (logId: string, updatedFields: Partial<AttendanceLog>) => void;
     getLogsBySubject: (subjectId: string) => AttendanceLog[];
     getLogsByDate: (date: string) => AttendanceLog[];
     hasLogForDate: (subjectId: string, date: string) => boolean;
@@ -28,6 +29,13 @@ export const useAttendanceStore = create<AttendanceState> ((set, get) => ({
       removeLog: (logId) =>
         set((state) => ({
           logs: state.logs.filter((log) => log.id !== logId),
+        })),
+
+      updateLog: (logId, updatedFields) => 
+        set((state) => ({
+          logs: state.logs.map((log) => 
+            log.id === logId ? {...log, ...updatedFields} : log
+          )
         })),
     
       getLogsBySubject: (subjectId) =>
