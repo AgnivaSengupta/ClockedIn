@@ -1,75 +1,83 @@
-# 📱 Attendance Tracker App
+# ClockedIn  
+Your friendly companion for tracking college attendance — built by a student who’s been there.  
 
-A mobile app built with **React Native (Expo)** to help college students track and maintain the minimum 75% attendance requirement. The app offers a subject-wise view, class schedules, and clean visuals to make attendance tracking simple and effective.
-
----
-
-## 🚀 Features
-
-### ✅ Completed
-
-- **🎯 User Onboarding**  
-  Set your name, weekly class schedule, and target attendance percentage.  
-  *(Currently stored in memory using Zustand – persistent storage via MMKV is upcoming)*
-
-- **📅 Daily Attendance Overview**  
-  Home screen displays today’s classes and current attendance percentage per subject.
-
-- **📆 Expandable Weekly Calendar**  
-  Check which classes are scheduled on any day with a clean calendar interface.
-
-- **🧭 Bottom Navigation Bar**  
-  Navigate between Home, Schedule, History, and Settings pages with a custom-designed bottom nav.
-
-- **📄 Subject Management**  
-  View and manage each subject individually, with planned per-subject attendance history calendar.
-
-- **📊 Subject-wise Attendance Calendar View**  
-  Visualize attendance history (present, absent, no class) per subject in a calendar format.
+<p align="center">
+  <img src="assets/screenshots/home-free.jpg" width="250" alt="Subject Details" />
+  <img src="assets/screenshots/home2.jpg" width="250" alt="ClockedIn Home Screen" />
+  <img src="assets/screenshots/calendarPage.jpg" width="250" alt="Calendar View" />
+  <img src="assets/screenshots/subjectHistory.jpg" width="250" alt="Subject Details" />
+  <img src="assets/screenshots/attendanceHistory.jpg" width="250" alt="Subject Details" />
+</p>
 
 ---
 
-### 🛠️ In Progress
+## What’s This About?
+We’ve all been there — frantically calculating if skipping that 8 AM lecture will drop you below 75%.  
+**ClockedIn** makes attendance tracking *pleasant* (revolutionary, right?).
 
-- **📦 Persistent Storage with MMKV**  
-  To save attendance data and user preferences locally using high-performance storage.
-
-- **🌙 Dark Mode Support**  
-  Toggle between light and dark themes.
-
-- **🧮 Improved Attendance Logic**  
-  Fixing edge cases in attendance percentage calculation.
-
-- **Setting Page**
+No more messy spreadsheets or late-night panic math.  
+Just a clean, intuitive app showing exactly where you stand in each subject — and how many classes you can *responsibly* afford to miss 😉
 
 ---
 
-## 🧑‍💻 Tech Stack
+## Core Features
 
-- **React Native (Expo)**
-- **Zustand** – global state management
-- **React Native Calendars** – calendar components
-- **MMKV (Planned)** – for persistent offline storage
-- **React Native Reanimated (Planned)** – for animations
-
----
-
-## 📸 Screenshots
-
-_(Coming soon)_ — Will include UI previews of the home screen, calendar, and subject pages.
+- **Quick Onboarding:** Set your name, subjects, schedule, and target percentage in minutes.  
+- **At-a-Glance Home:** Instantly see today’s classes and your current attendance.  
+- **Weekly Calendar:** Expandable view to plan ahead easily.  
+- **Real-Time Updates:** Mark yourself present/absent and watch percentages adjust instantly.  
+- **Subject Insights:** Tap any subject to see your full attendance history in a color-coded calendar.  
+- **Clean Navigation:** Simple bottom tabs that actually make sense.  
 
 ---
 
-## 🔮 Upcoming Enhancements
+## Roadmap
 
-- Attendance analytics and graphs
-- Notification reminders before classes
-- Cloud sync or export/backup functionality
-- Customizable attendance rules
+**Coming Soon**
+- Persistent storage using **MMKV** (data that survives restarts)  
+- **Dark Mode** for those late-night attendance checks  
+- A proper **Settings page** for more customization  
+
+**Future Ideas**
+- Smart pre-class notifications  
+- Attendance trends and insights  
+- “Safe-to-skip” calculator (the feature we all secretly want 😉)  
+- Data export options  
 
 ---
 
-## 📁 Project Structure (Simplified)
+## 🛠️ Built With
+
+- **React Native + Expo** – smooth cross-platform development  
+- **TypeScript** – for safer, cleaner code  
+- **Zustand** – lightweight state management that just works  
+- **React Native Calendars** – all the calendar magic  
+- **MMKV (coming soon)** – fast, reliable local storage  
+
+---
+
+## Getting Started
+
+### What You’ll Need
+- **Node.js v18+**  
+- **Expo CLI**  
+- An **iOS/Android device** or emulator  
+
+### Setup
+
+```bash
+# Clone the repo
+git clone https://github.com/AgnivaSengupta/ClockedIn.git
+cd clockedIn
+
+# Install dependencies
+npm install
+
+# Start the app
+npx expo start
+```
+
+## 📁 Project Structure
 
 ```bash
 .
@@ -105,3 +113,22 @@ _(Coming soon)_ — Will include UI previews of the home screen, calendar, and s
 ├── package.json
 ├── README.md
 └── tsconfig.json
+```
+
+## How to Use It
+
+### First Time?
+- Open the app and breeze through onboarding.
+- Add your subjects and weekly schedule.
+- Set your target percentage (probably 75%).
+You’re done! Start tracking.
+
+### Day-to-Day
+- Open the app to see today’s lineup.
+- Tap to mark yourself present or absent.
+- Check your updated percentages instantly.
+- Use the calendar tab to plan ahead.
+- Dive into any subject for detailed history.
+
+
+<p align="center"> Built with ☕ by a student tired of attendance anxiety. If this saves you from even one attendance-related panic attack, ⭐ the repo! </p>
