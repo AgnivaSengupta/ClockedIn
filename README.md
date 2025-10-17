@@ -1,13 +1,14 @@
 # ClockedIn  
 Your friendly companion for tracking college attendance — built by a student who’s been there.  
 
-<p align="center">
-  <img src="assets/screenshots/home-free.jpg" width="250" alt="Subject Details" />
-  <img src="assets/screenshots/home2.jpg" width="250" alt="ClockedIn Home Screen" />
-  <img src="assets/screenshots/calendarPage.jpg" width="250" alt="Calendar View" />
-  <img src="assets/screenshots/subjectHistory.jpg" width="250" alt="Subject Details" />
-  <img src="assets/screenshots/attendanceHistory.jpg" width="250" alt="Subject Details" />
-</p>
+<div align="center">
+  <img src="assets/screenshots/home-free.jpg" width="150" hspace="10" alt="Home Screen" />
+  <img src="assets/screenshots/home2.jpg" width="150" hspace="10" alt="ClockedIn Home Screen" />
+  <img src="assets/screenshots/calendarPage.jpg" width="150" hspace="10" alt="Calendar View" />
+  <img src="assets/screenshots/subjectHistory.jpg" width="150" hspace="10" alt="Subject History" />
+  <img src="assets/screenshots/attendanceHistory.jpg" width="150" hspace="10" alt="Attendance History" />
+</div>
+
 
 ---
 
@@ -130,5 +131,6 @@ You’re done! Start tracking.
 - Use the calendar tab to plan ahead.
 - Dive into any subject for detailed history.
 
+---
 
 <p align="center"> Built with ☕ by a student tired of attendance anxiety. If this saves you from even one attendance-related panic attack, ⭐ the repo! </p>
